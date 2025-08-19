@@ -12,6 +12,29 @@ def home():
     return "Hello! Flask API running on Azure."
 
 # ----------- Price Endpoints -----------
+@app.route('/high-cpu')
+def high_cpu():
+    # Simulate CPU load by calculating primes
+    n = 50000
+    primes = []
+    for num in range(2, n):
+        is_prime = True
+        for i in range(2, int(math.sqrt(num)) + 1):
+            if num % i == 0:
+                is_prime = False
+                break
+        if is_prime:
+            primes.append(num)
+    return f"Calculated {len(primes)} prime numbers."
+
+@app.route('/high-memory')
+def high_memory():
+    # Simulate memory load
+    data = ['x' * 1024 * 1024] * 500  # ~500MB in-memory array
+    time.sleep(5)
+    return f"Allocated {len(data)} MB of memory temporarily."
+
+
 
 @app.route("/api/retrieve-price", methods=["GET"])
 def retrieve_price():
